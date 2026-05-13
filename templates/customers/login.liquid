@@ -1,0 +1,12 @@
+<section class="ve-section"><div class="ve-page ve-page--narrow">
+  <header><span class="ve-eyebrow">Account</span><h1 class="ve-display">Sign in</h1></header>
+  <div class="ve-rule"></div>
+  {%- form 'customer_login', class: 've-auth' -%}
+    {{ form.errors | default_errors }}
+    <label class="ve-eyebrow">Email <input class="ve-input" name="customer[email]" type="email" required></label>
+    <label class="ve-eyebrow">Password <input class="ve-input" name="customer[password]" type="password" required></label>
+    <button type="submit" class="ve-btn">Sign in</button>
+    <p class="ve-auth__alt"><a class="ve-link" href="{{ routes.account_recover_url }}">Forgot password</a> · <a class="ve-link" href="{{ routes.account_register_url }}">Create account</a></p>
+  {%- endform -%}
+</div></section>
+<style>.ve-auth { display: grid; gap: var(--ve-space-4); margin-top: var(--ve-space-4); } .ve-auth label { display: grid; gap: var(--ve-space-1); } .ve-auth__alt { font-size: var(--ve-fs-sm); display: flex; gap: var(--ve-space-2); }</style>

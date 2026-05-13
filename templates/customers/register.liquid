@@ -1,0 +1,14 @@
+<section class="ve-section"><div class="ve-page ve-page--narrow">
+  <header><span class="ve-eyebrow">Account</span><h1 class="ve-display">Create account</h1></header>
+  <div class="ve-rule"></div>
+  {%- form 'create_customer', class: 've-auth' -%}
+    {{ form.errors | default_errors }}
+    <label class="ve-eyebrow">First name <input class="ve-input" name="customer[first_name]" type="text"></label>
+    <label class="ve-eyebrow">Last name <input class="ve-input" name="customer[last_name]" type="text"></label>
+    <label class="ve-eyebrow">Email <input class="ve-input" name="customer[email]" type="email" required></label>
+    <label class="ve-eyebrow">Password <input class="ve-input" name="customer[password]" type="password" required></label>
+    <button type="submit" class="ve-btn">Create</button>
+    <p class="ve-auth__alt"><a class="ve-link" href="{{ routes.account_login_url }}">Have an account? Sign in</a></p>
+  {%- endform -%}
+</div></section>
+<style>.ve-auth { display: grid; gap: var(--ve-space-4); margin-top: var(--ve-space-4); } .ve-auth label { display: grid; gap: var(--ve-space-1); }</style>

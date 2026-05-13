@@ -1,0 +1,74 @@
+<section class="ve-cart ve-section" data-section-id="{{ section.id }}">
+  <div class="ve-page ve-page--narrow">
+    <header><span class="ve-eyebrow">Basket</span><h1 class="ve-h1">Cart</h1></header>
+    <div class="ve-rule"></div>
+    {%- if cart.item_count > 0 -%}
+      {%- form 'cart', cart -%}
+        <ul class="ve-cart__items">
+          {%- for item in cart.items -%}
+            <li class="ve-cart__row" data-key="{{ item.key }}">
+              <a href="{{ item.url }}" class="ve-cart__media">
+                {%- if item.image -%}{{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: item.title | escape }}{%- else -%}<span>—</span>{%- endif -%}
+              </a>
+              <div class="ve-cart__meta">
+                <a href="{{ item.url }}" class="ve-h3">{{ item.product.title }}</a>
+                {%- if item.product.vendor != blank -%}<small class="ve-italic">{{ item.product.vendor }}</small>{%- endif -%}
+                {%- if item.variant.title != 'Default Title' -%}<small>{{ item.variant.title }}</small>{%- endif -%}
+              </div>
+              <div class="ve-cart__qty">
+                <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0" aria-label="Quantity">
+                <a href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0" class="ve-cart__remove">Remove</a>
+              </div>
+              <div class="ve-cart__price">{{ item.final_line_price | money_without_trailing_zeros }}</div>
+            </li>
+          {%- endfor -%}
+        </ul>
+        <footer class="ve-cart__foot">
+          <div class="ve-cart__subtotal">
+            <span class="ve-eyebrow">Subtotal</span>
+            <strong class="ve-h2">{{ cart.total_price | money_with_currency }}</strong>
+            <small>Tax and shipping calculated at checkout.</small>
+          </div>
+          <div class="ve-cart__actions">
+            <button type="submit" name="update" class="ve-btn ve-btn--ghost">Update</button>
+            <button type="submit" name="checkout" class="ve-btn">Checkout</button>
+          </div>
+        </footer>
+      {%- endform -%}
+    {%- else -%}
+      <div class="ve-cart__empty">
+        <p class="ve-display">An empty page.</p>
+        <p class="ve-lead">It has its own beauty, but you probably wanted books.</p>
+        <a class="ve-link" href="{{ routes.all_products_collection_url }}">Read shop</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.ve-cart__items { list-style: none; padding: 0; margin: 0; }
+.ve-cart__row {
+  display: grid; grid-template-columns: 80px 1fr auto auto;
+  gap: var(--ve-space-4);
+  padding-block: var(--ve-space-4);
+  border-bottom: 1px solid var(--ve-rule);
+  align-items: center;
+}
+.ve-cart__media img { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: var(--ve-paper-2); }
+.ve-cart__media span { display: grid; place-items: center; aspect-ratio: 3/4; background: var(--ve-paper-2); font-family: var(--ve-serif); }
+.ve-cart__meta { display: grid; gap: var(--ve-space-1); }
+.ve-cart__meta a { color: inherit; }
+.ve-cart__meta small { color: var(--ve-ink-muted); font-size: var(--ve-fs-sm); }
+.ve-cart__qty input { width: 60px; padding: 0.3rem; border: 1px solid var(--ve-rule); font: inherit; text-align: center; }
+.ve-cart__qty { display: grid; gap: var(--ve-space-1); justify-items: end; }
+.ve-cart__remove { color: var(--ve-ink-muted); font-size: var(--ve-fs-xs); text-decoration: underline; }
+.ve-cart__price { font-family: var(--ve-serif); font-size: 1.125rem; }
+.ve-cart__foot { display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: var(--ve-space-4); margin-top: var(--ve-space-5); }
+.ve-cart__subtotal { display: grid; gap: var(--ve-space-1); }
+.ve-cart__subtotal small { color: var(--ve-ink-muted); font-size: var(--ve-fs-sm); }
+.ve-cart__actions { display: flex; gap: var(--ve-space-3); }
+.ve-cart__empty { text-align: center; padding-block: var(--ve-space-9); display: grid; gap: var(--ve-space-4); justify-items: center; }
+@media (max-width: 640px) { .ve-cart__row { grid-template-columns: 60px 1fr; row-gap: var(--ve-space-2); } .ve-cart__qty, .ve-cart__price { grid-column: 2; } }
+{% endstylesheet %}
+
+{% schema %}{ "name": "Cart", "tag": "section" }{% endschema %}

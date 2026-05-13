@@ -1,0 +1,42 @@
+<footer class="ve-footer" data-section-id="{{ section.id }}">
+  <div class="ve-page ve-footer__top">
+    <div class="ve-footer__brand">
+      <p class="ve-display ve-italic">{{ shop.name }}</p>
+      {%- if section.settings.tagline != blank -%}<p class="ve-footer__tagline">{{ section.settings.tagline }}</p>{%- endif -%}
+    </div>
+    <div class="ve-footer__cols">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'menu' -%}
+          <div class="ve-footer__col" {{ block.shopify_attributes }}><h4 class="ve-eyebrow">{{ block.settings.heading }}</h4><ul>{%- for link in linklists[block.settings.menu].links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul></div>
+        {%- elsif block.type == 'text' -%}
+          <div class="ve-footer__col" {{ block.shopify_attributes }}><h4 class="ve-eyebrow">{{ block.settings.heading }}</h4><div class="ve-footer__text">{{ block.settings.text }}</div></div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  <div class="ve-page ve-footer__bottom">
+    <small>© {{ 'now' | date: '%Y' }} {{ shop.name }} · —.</small>
+    <div>{%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}</div>
+  </div>
+</footer>
+{% stylesheet %}
+.ve-footer { background: var(--ve-bg-2); padding-block: var(--ve-space-8) var(--ve-space-5); margin-top: var(--ve-space-9); }
+.ve-footer__top { display: grid; grid-template-columns: 1.2fr 2fr; gap: var(--ve-space-8); padding-bottom: var(--ve-space-6); border-bottom: 1px solid var(--ve-rule); }
+.ve-footer__brand .ve-display { font-size: clamp(3rem, 6vw, 5rem); color: var(--ve-sage-deep); }
+.ve-footer__tagline { margin-top: var(--ve-space-2); color: var(--ve-ink-soft); }
+.ve-footer__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--ve-space-6); }
+.ve-footer__col ul { list-style: none; padding: 0; margin-top: var(--ve-space-3); display: grid; gap: var(--ve-space-2); }
+.ve-footer__col a { color: var(--ve-ink-soft); font-size: var(--ve-fs-sm); transition: color var(--ve-dur) var(--ve-ease); }
+.ve-footer__col a:hover { color: var(--ve-clay); }
+.ve-footer__text { margin-top: var(--ve-space-3); color: var(--ve-ink-soft); font-size: var(--ve-fs-sm); }
+.ve-footer__bottom { display: flex; justify-content: space-between; padding-top: var(--ve-space-5); flex-wrap: wrap; gap: var(--ve-space-3); color: var(--ve-ink-mute); font-size: var(--ve-fs-sm); }
+@media (max-width: 720px) { .ve-footer__top { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Footer", "settings": [
+  { "type": "text", "id": "tagline", "label": "Tagline", "default": "—." }
+], "blocks": [
+  { "type": "menu", "name": "Menu column", "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "Shop" }, { "type": "link_list", "id": "menu", "label": "Menu" }] },
+  { "type": "text", "name": "Text column", "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "Care" }, { "type": "richtext", "id": "text", "label": "Text" }] }
+], "max_blocks": 4 }
+{% endschema %}

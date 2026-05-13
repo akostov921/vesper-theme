@@ -1,0 +1,46 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero"
+    },
+    "social_proof_marquee": {
+      "type": "social-proof-marquee"
+    },
+    "value_props_icons": {
+      "type": "value-props-icons"
+    },
+    "featured_collection_band": {
+      "type": "featured-collection-band"
+    },
+    "editorial_image_with_text": {
+      "type": "editorial-image-with-text"
+    },
+    "ingredient_callout": {
+      "type": "ingredient-callout"
+    },
+    "before_after_slider": {
+      "type": "before-after-slider"
+    },
+    "founder_story_split": {
+      "type": "founder-story-split"
+    },
+    "testimonials_rotator": {
+      "type": "testimonials-rotator"
+    },
+    "press_quotes_stack": {
+      "type": "press-quotes-stack"
+    }
+  },
+  "order": [
+    "hero",
+    "social_proof_marquee",
+    "value_props_icons",
+    "featured_collection_band",
+    "editorial_image_with_text",
+    "ingredient_callout",
+    "before_after_slider",
+    "founder_story_split",
+    "testimonials_rotator",
+    "press_quotes_stack"
+  ]
+}

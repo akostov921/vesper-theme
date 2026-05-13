@@ -1,0 +1,40 @@
+{%- comment %} nav.transparent-becomes-thin-blur — beauty soft luxury {% endcomment -%}
+<header class="ve-header" data-section-id="{{ section.id }}">
+  <div class="ve-page ve-header__inner">
+    <a href="{{ routes.root_url }}" class="ve-header__logo">
+      {%- if section.settings.logo != blank -%}{{ section.settings.logo | image_url: width: 400 | image_tag: width: 130 }}
+      {%- else -%}<span class="ve-header__wordmark ve-italic">{{ shop.name }}</span>{%- endif -%}
+    </a>
+    <nav class="ve-header__nav" aria-label="Main">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}" class="ve-header__link{% if link.active %} is-active{% endif %}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+    <div class="ve-header__actions">
+      <a href="{{ routes.search_url }}" class="ve-header__action">Search</a>
+      {%- if customer -%}<a href="{{ routes.account_url }}" class="ve-header__action">Account</a>
+      {%- else -%}<a href="{{ routes.account_login_url }}" class="ve-header__action">Sign in</a>{%- endif -%}
+      <button data-cart-toggle class="ve-header__action ve-header__cart">Bag<span data-cart-count>({{ cart.item_count }})</span></button>
+    </div>
+  </div>
+</header>
+{% stylesheet %}
+.ve-header { background: rgba(244, 237, 225, 0); position: sticky; top: 0; z-index: 100; transition: background var(--ve-dur) var(--ve-ease), backdrop-filter var(--ve-dur) var(--ve-ease); }
+.ve-header.is-scrolled { background: rgba(244, 237, 225, 0.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.ve-header__inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding-block: var(--ve-space-4); gap: var(--ve-space-5); }
+.ve-header__logo { justify-self: start; }
+.ve-header__wordmark { font-family: var(--ve-serif); font-size: 1.5rem; font-style: italic; }
+.ve-header__nav { display: flex; gap: var(--ve-space-6); justify-self: center; }
+.ve-header__link { font-size: var(--ve-fs-sm); color: var(--ve-ink-soft); transition: color var(--ve-dur) var(--ve-ease); }
+.ve-header__link:hover, .ve-header__link.is-active { color: var(--ve-ink); }
+.ve-header__actions { display: flex; gap: var(--ve-space-4); justify-self: end; align-items: center; }
+.ve-header__action { font-size: var(--ve-fs-sm); color: var(--ve-ink-soft); background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit; transition: color var(--ve-dur) var(--ve-ease); display: inline-flex; gap: 0.3rem; }
+.ve-header__action:hover { color: var(--ve-clay); }
+@media (max-width: 768px) { .ve-header__inner { grid-template-columns: auto 1fr; } .ve-header__nav { display: none; } }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Header", "settings": [
+  { "type": "image_picker", "id": "logo", "label": "Logo" },
+  { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+] }
+{% endschema %}

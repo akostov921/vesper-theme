@@ -1,0 +1,16 @@
+<section class="ve-section"><div class="ve-page ve-page--narrow">
+  <header><span class="ve-eyebrow">Account</span><h1 class="ve-display">Addresses</h1></header>
+  {%- for address in customer.addresses -%}
+    <article class="ve-addr"><p>{{ address | format_address }}</p><a class="ve-link" href="{{ address.url }}">Edit</a></article>
+  {%- endfor -%}
+  {%- form 'customer_address', customer.new_address -%}
+    <h2 class="ve-h3" style="margin-top: var(--ve-space-6);">Add new</h2>
+    <label class="ve-eyebrow">First <input class="ve-input" name="address[first_name]"></label>
+    <label class="ve-eyebrow">Last <input class="ve-input" name="address[last_name]"></label>
+    <label class="ve-eyebrow">Address <input class="ve-input" name="address[address1]"></label>
+    <label class="ve-eyebrow">City <input class="ve-input" name="address[city]"></label>
+    <label class="ve-eyebrow">Country <input class="ve-input" name="address[country]"></label>
+    <button type="submit" class="ve-btn" style="margin-top: var(--ve-space-3);">Save</button>
+  {%- endform -%}
+</div></section>
+<style>.ve-addr { padding: var(--ve-space-3) 0; border-bottom: 1px solid var(--ve-rule); } label { display: grid; gap: 0.25rem; margin: 0.5rem 0; }</style>

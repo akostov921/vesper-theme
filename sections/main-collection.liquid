@@ -1,0 +1,53 @@
+{%- comment %} Composition: collection.asymmetric-tiles.5-shape — repeating ABCDE rhythm
+   Different from Storynest (editorial-mixed) + Margin (masonry) + Puffypaw (uniform-4).
+{% endcomment -%}
+<section class="ve-coll ve-section" data-section-id="{{ section.id }}">
+  <div class="ve-page">
+    <header class="ve-coll__head">
+      <span class="ve-eyebrow">Collection</span>
+      <h1 class="ve-display">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}<p class="ve-lead">{{ collection.description }}</p>{%- endif -%}
+    </header>
+    <div class="ve-rule"></div>
+    {%- if collection.products.size > 0 -%}
+      {%- paginate collection.products by 30 -%}
+        <div class="ve-coll__asym">
+          {%- for product in collection.products -%}
+            {%- assign slot_index = forloop.index0 | modulo: 5 -%}
+            {%- case slot_index -%}{%- when 0 -%}{%- assign slot = 'a' -%}{%- when 1 -%}{%- assign slot = 'b' -%}{%- when 2 -%}{%- assign slot = 'c' -%}{%- when 3 -%}{%- assign slot = 'd' -%}{%- else -%}{%- assign slot = 'e' -%}{%- endcase -%}
+            <a class="ve-asym__tile ve-asym__tile--{{ slot }} ve-reveal" href="{{ product.url }}">
+              {%- if product.featured_image -%}{%- assign cat = product.title | escape -%}{{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: cat }}
+              {%- else -%}<div style="width:100%;height:100%;background:linear-gradient(135deg,var(--ve-sage),var(--ve-clay));"></div>{%- endif -%}
+              <span class="ve-asym__label">{{ product.title }} · {{ product.price | money_without_trailing_zeros }}</span>
+            </a>
+          {%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          <nav class="ve-coll__pager">{%- if paginate.previous -%}<a class="ve-link" href="{{ paginate.previous.url }}">← Previous</a>{%- endif -%}<span class="ve-eyebrow">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>{%- if paginate.next -%}<a class="ve-link" href="{{ paginate.next.url }}">Next →</a>{%- endif -%}</nav>
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- else -%}
+      <p class="ve-coll__empty">Empty for now. <a class="ve-link" href="{{ routes.all_products_collection_url }}">Browse all</a></p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.ve-coll__head { display: grid; gap: var(--ve-space-3); padding-bottom: var(--ve-space-3); }
+.ve-coll__asym { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: 240px; gap: var(--ve-space-3); margin-top: var(--ve-space-5); }
+.ve-asym__tile { position: relative; overflow: hidden; border-radius: var(--ve-radius); display: block; background: var(--ve-bg-2); }
+.ve-asym__tile img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--ve-dur-slow) var(--ve-ease); }
+.ve-asym__tile:hover img { transform: scale(1.03); }
+.ve-asym__tile--a { grid-column: span 2; }
+.ve-asym__tile--b { grid-column: span 2; grid-row: span 2; }
+.ve-asym__tile--c { grid-column: span 2; }
+.ve-asym__tile--d { grid-column: span 3; }
+.ve-asym__tile--e { grid-column: span 1; grid-row: span 2; }
+.ve-asym__label { position: absolute; left: var(--ve-space-3); bottom: var(--ve-space-3); background: rgba(251, 246, 236, 0.94); padding: 0.3rem 0.7rem; border-radius: var(--ve-radius); font-size: var(--ve-fs-xs); backdrop-filter: blur(8px); font-weight: 500; }
+.ve-coll__pager { display: flex; justify-content: space-between; align-items: center; margin-top: var(--ve-space-7); padding-top: var(--ve-space-4); border-top: 1px solid var(--ve-rule); }
+.ve-coll__empty { padding-block: var(--ve-space-8); text-align: center; color: var(--ve-ink-soft); }
+@media (max-width: 880px) { .ve-coll__asym { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+  .ve-asym__tile--a, .ve-asym__tile--b, .ve-asym__tile--c, .ve-asym__tile--d, .ve-asym__tile--e { grid-column: auto; grid-row: auto; }
+}
+{% endstylesheet %}
+{% schema %}{ "name": "Collection", "tag": "section" }{% endschema %}

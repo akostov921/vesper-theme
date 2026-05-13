@@ -1,0 +1,21 @@
+<article class="ve-page-cms ve-section">
+  <div class="ve-page ve-page--narrow">
+    <header>
+      <span class="ve-eyebrow">Page</span>
+      <h1 class="ve-display">{{ page.title }}</h1>
+    </header>
+    <div class="ve-rule"></div>
+    <div class="ve-page-cms__body">{{ page.content }}</div>
+  </div>
+</article>
+
+{% stylesheet %}
+.ve-page-cms__body { font-size: 1.0625rem; line-height: 1.7; color: var(--ve-ink-soft); }
+.ve-page-cms__body h2 { font-family: var(--ve-serif); font-size: var(--ve-fs-h2); margin-top: var(--ve-space-7); margin-bottom: var(--ve-space-3); color: var(--ve-ink); }
+.ve-page-cms__body h3 { font-family: var(--ve-serif); font-size: var(--ve-fs-h3); margin-top: var(--ve-space-5); margin-bottom: var(--ve-space-3); color: var(--ve-ink); }
+.ve-page-cms__body p { margin-bottom: var(--ve-space-4); }
+.ve-page-cms__body img { margin-block: var(--ve-space-5); }
+.ve-page-cms__body a { color: var(--ve-accent); border-bottom: 1px solid currentColor; }
+{% endstylesheet %}
+
+{% schema %}{ "name": "Page", "tag": "section" }{% endschema %}

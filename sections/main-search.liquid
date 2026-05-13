@@ -1,0 +1,39 @@
+<section class="ve-search ve-section">
+  <div class="ve-page ve-page--narrow">
+    <header><span class="ve-eyebrow">Search</span>
+      <h1 class="ve-h1">{%- if search.performed -%}Results for "{{ search.terms | escape }}"{%- else -%}Search shop{%- endif -%}</h1>
+    </header>
+    <form action="{{ routes.search_url }}" method="get" class="ve-search__form">
+      <label class="ve-vh" for="q">Search</label>
+      <input id="q" type="search" name="q" value="{{ search.terms | escape }}" class="ve-input" placeholder="{{ 'general.search.placeholder' | t }}" autofocus>
+      <button type="submit" class="ve-link">Search</button>
+    </form>
+    <div class="ve-rule"></div>
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <div class="ve-search__list">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item, aspect: 'cover' %}
+            {%- else -%}
+              <a class="ve-search__item" href="{{ item.url }}">
+                <small class="ve-eyebrow">{{ item.object_type }}</small>
+                <strong class="ve-h3">{{ item.title }}</strong>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.ve-search__form { display: grid; grid-template-columns: 1fr auto; gap: var(--ve-space-3); align-items: end; margin-top: var(--ve-space-4); }
+.ve-search__list { display: grid; gap: var(--ve-space-5); margin-top: var(--ve-space-5); }
+.ve-search__item { display: grid; gap: var(--ve-space-1); padding-block: var(--ve-space-3); border-bottom: 1px solid var(--ve-rule); }
+{% endstylesheet %}
+
+{% schema %}{ "name": "Search", "tag": "section" }{% endschema %}

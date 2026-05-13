@@ -1,0 +1,27 @@
+<section class="ve-news ve-section" data-section-id="{{ section.id }}">
+  <div class="ve-page ve-page--narrow ve-news__inner ve-reveal">
+    <span class="ve-eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="ve-h1 ve-italic">{{ section.settings.heading }}</h2>
+    <p class="ve-lead">{{ section.settings.body }}</p>
+    {%- form 'customer', class: 've-news__form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <label class="ve-vh" for="ve-news-email">Email</label>
+      <input id="ve-news-email" class="ve-input" type="email" name="contact[email]" placeholder="you@example.com" required>
+      <button type="submit" class="ve-link">Subscribe</button>
+      {%- if form.posted_successfully? -%}<p class="ve-news__msg">You're in. We send one slow letter each fortnight.</p>{%- endif -%}
+    {%- endform -%}
+  </div>
+</section>
+{% stylesheet %}
+.ve-news { background: var(--ve-bg-2); }
+.ve-news__inner { display: grid; gap: var(--ve-space-3); text-align: left; }
+.ve-news__form { display: grid; grid-template-columns: 1fr auto; gap: var(--ve-space-3); align-items: end; margin-top: var(--ve-space-4); max-width: 480px; }
+.ve-news__msg { grid-column: 1 / -1; color: var(--ve-sage-deep); font-size: var(--ve-fs-sm); }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Newsletter", "tag": "section", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Newsletter" },
+  { "type": "text", "id": "heading", "label": "Heading", "default": "Subscribe." },
+  { "type": "textarea", "id": "body", "label": "Body", "default": "Notes on formulation, founder reflections, the occasional discount. We send rarely; we never sell your address." }
+], "presets": [{ "name": "Newsletter" }] }
+{% endschema %}

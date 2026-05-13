@@ -1,0 +1,47 @@
+<section class="ve-feat-stack ve-section">
+  <div class="ve-page">
+    <header class="ve-feat-stack__head">
+      <span class="ve-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="ve-h2">{{ section.settings.heading }}</h2>
+    </header>
+    <div class="ve-feat-stack__list">
+      {%- for block in section.blocks -%}
+        <div class="ve-feat-stack__row" {{ block.shopify_attributes }}>
+          <span class="ve-feat-stack__num">0{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <div class="ve-feat-stack__copy">
+            <h3 class="ve-h3">{{ block.settings.title }}</h3>
+            <p>{{ block.settings.body }}</p>
+          </div>
+          <div class="ve-feat-stack__visual">{%- if block.settings.icon != blank -%}{{ block.settings.icon }}{%- endif -%}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.ve-feat-stack__head { display: grid; gap: 0.5rem; max-width: 60ch; margin-bottom: 3rem; }
+.ve-feat-stack__list { display: grid; }
+.ve-feat-stack__row { display: grid; grid-template-columns: 80px 1fr 60px; gap: 2rem; padding-block: 2rem; border-bottom: 1px solid rgba(0,0,0,0.1); align-items: start; }
+.ve-feat-stack__num { font-family: var(--ve-display); font-size: 1.5rem; opacity: 0.5; }
+.ve-feat-stack__copy { display: grid; gap: 0.5rem; max-width: 56ch; }
+.ve-feat-stack__copy p { opacity: 0.75; line-height: 1.55; }
+.ve-feat-stack__visual { text-align: right; font-size: 2rem; opacity: 0.7; }
+@media (max-width: 720px) { .ve-feat-stack__row { grid-template-columns: 40px 1fr; gap: 1rem; } .ve-feat-stack__visual { display: none; } }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Feature stack (numbered)", "tag": "section", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "HOW IT WORKS" },
+  { "type": "text", "id": "heading", "label": "Heading", "default": "A simple routine, layered." }
+], "blocks": [
+  { "type": "step", "name": "Step", "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Cleanse weekly" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "A short paragraph explaining what to do at this step." },
+    { "type": "text", "id": "icon", "label": "Icon / emoji", "default": "◦" }
+  ]}
+], "max_blocks": 8, "presets": [{ "name": "Feature stack (numbered)", "blocks": [
+  { "type": "step", "settings": { "title": "Cleanse" } },
+  { "type": "step", "settings": { "title": "Treat" } },
+  { "type": "step", "settings": { "title": "Condition" } },
+  { "type": "step", "settings": { "title": "Style" } }
+]}]}
+{% endschema %}

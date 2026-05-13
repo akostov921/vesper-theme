@@ -1,0 +1,21 @@
+<section class="ve-section"><div class="ve-page ve-page--narrow">
+  <header><span class="ve-eyebrow">Account</span><h1 class="ve-display">Welcome, {{ customer.first_name | default: 'reader' }}.</h1></header>
+  <div class="ve-rule"></div>
+  <p style="margin-bottom: var(--ve-space-5);"><a class="ve-link" href="{{ routes.account_logout_url }}">Sign out</a></p>
+  <h2 class="ve-h2">Orders</h2>
+  {%- if customer.orders.size > 0 -%}
+    <table class="ve-table">
+      <thead><tr><th>Order</th><th>Date</th><th>Total</th><th>Status</th></tr></thead>
+      <tbody>
+        {%- for order in customer.orders -%}
+          <tr><td><a class="ve-link" href="{{ order.customer_url }}">{{ order.name }}</a></td><td>{{ order.created_at | date: '%B %-d, %Y' }}</td><td>{{ order.total_price | money }}</td><td>{{ order.financial_status_label }}</td></tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+  {%- else -%}
+    <p>No orders yet. <a class="ve-link" href="{{ routes.all_products_collection_url }}">Find your first book →</a></p>
+  {%- endif -%}
+  <h2 class="ve-h2" style="margin-top: var(--ve-space-7);">Addresses</h2>
+  <p><a class="ve-link" href="{{ routes.account_addresses_url }}">Manage addresses</a></p>
+</div></section>
+<style>.ve-table { width: 100%; border-collapse: collapse; font-size: var(--ve-fs-sm); margin-top: var(--ve-space-3); } .ve-table th, .ve-table td { padding: var(--ve-space-3) var(--ve-space-2); text-align: left; border-bottom: 1px solid var(--ve-rule); } .ve-table th { color: var(--ve-ink-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; font-size: var(--ve-fs-xs); }</style>

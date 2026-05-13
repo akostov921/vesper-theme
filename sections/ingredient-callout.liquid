@@ -1,0 +1,49 @@
+<section class="ve-ingr ve-section">
+  <div class="ve-page ve-ingr__grid">
+    <div class="ve-ingr__media">
+      {%- if section.settings.image != blank -%}{%- assign ialt = section.settings.heading | escape -%}{{ section.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: ialt, class: 've-ingr__img' }}
+      {%- elsif section.settings.fallback_url != blank -%}<img src="{{ section.settings.fallback_url }}" class="ve-ingr__img" alt="" width="1000" height="1000" loading="lazy">{%- endif -%}
+    </div>
+    <div class="ve-ingr__copy">
+      {%- if section.settings.eyebrow != blank -%}<span class="ve-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="ve-h2 ve-ingr__heading">{{ section.settings.heading }}</h2>
+      <p class="ve-lead">{{ section.settings.lead }}</p>
+      <ul class="ve-ingr__claims">
+        {%- for block in section.blocks -%}
+          <li class="ve-ingr__claim" {{ block.shopify_attributes }}><strong>{{ block.settings.headline }}</strong><span>{{ block.settings.body }}</span></li>
+        {%- endfor -%}
+      </ul>
+      {%- if section.settings.cta_text != blank -%}<a class="ve-link" href="{{ section.settings.cta_link }}">{{ section.settings.cta_text }}</a>{%- endif -%}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.ve-ingr__grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 4rem; align-items: center; }
+.ve-ingr__img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; }
+.ve-ingr__copy { display: grid; gap: 1.25rem; max-width: 56ch; }
+.ve-ingr__claims { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
+.ve-ingr__claim { display: grid; gap: 0.25rem; padding-block: 0.5rem; border-top: 1px solid rgba(0,0,0,0.1); }
+.ve-ingr__claim strong { font-size: 0.875rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.ve-ingr__claim span { font-size: 0.95rem; opacity: 0.75; line-height: 1.5; }
+@media (max-width: 880px) { .ve-ingr__grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Ingredient callout", "tag": "section", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Hero ingredient" },
+  { "type": "text", "id": "heading", "label": "Heading", "default": "Cold-pressed argan oil." },
+  { "type": "textarea", "id": "lead", "label": "Lead", "default": "Sourced from a single cooperative in Morocco's Souss-Massa region." },
+  { "type": "image_picker", "id": "image", "label": "Image" },
+  { "type": "text", "id": "fallback_url", "label": "Fallback image URL" },
+  { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Read the sourcing report" },
+  { "type": "url", "id": "cta_link", "label": "CTA link" }
+], "blocks": [
+  { "type": "claim", "name": "Claim", "settings": [
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Strengthens" },
+    { "type": "text", "id": "body", "label": "Body", "default": "Vitamin E + omega 9 restore hair's protein structure." }
+  ]}
+], "max_blocks": 5, "presets": [{ "name": "Ingredient callout", "blocks": [
+  { "type": "claim", "settings": { "headline": "Strengthens" } },
+  { "type": "claim", "settings": { "headline": "Conditions" } },
+  { "type": "claim", "settings": { "headline": "Protects" } }
+]}]}
+{% endschema %}

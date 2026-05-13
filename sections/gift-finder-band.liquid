@@ -1,0 +1,39 @@
+<section class="ve-gift ve-section">
+  <div class="ve-page ve-gift__inner">
+    <div class="ve-gift__copy">
+      <span class="ve-eyebrow">{{ section.settings.eyebrow | default: 'GIFTING' }}</span>
+      <h2 class="ve-h2">{{ section.settings.heading }}</h2>
+      <p class="ve-lead">{{ section.settings.body }}</p>
+      <div class="ve-gift__buttons">
+        {%- for block in section.blocks -%}
+          <a class="ve-gift__btn" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.ve-gift__inner { padding: clamp(2rem, 4vw, 3rem); background: rgba(0,0,0,0.04); border-radius: 12px; text-align: center; display: grid; gap: 1rem; place-items: center; }
+.ve-gift__copy { display: grid; gap: 0.75rem; max-width: 56ch; }
+.ve-gift__buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-top: 0.75rem; }
+.ve-gift__btn { padding: 0.6rem 1.1rem; border: 1px solid currentColor; border-radius: 999px; font-size: 0.875rem; transition: background 200ms, color 200ms; }
+.ve-gift__btn:hover { background: currentColor; }
+.ve-gift__btn:hover { color: inherit; filter: invert(1); }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Gift finder band", "tag": "section", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "GIFTING" },
+  { "type": "text", "id": "heading", "label": "Heading", "default": "Gift cards and curated sets." },
+  { "type": "textarea", "id": "body", "label": "Body", "default": "Hand-tied with kraft paper. Free shipping over $50." }
+], "blocks": [
+  { "type": "btn", "name": "Button", "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "Under $50" },
+    { "type": "url", "id": "link", "label": "Link" }
+  ]}
+], "max_blocks": 5, "presets": [{ "name": "Gift finder band", "blocks": [
+  { "type": "btn", "settings": { "label": "Under $50" } },
+  { "type": "btn", "settings": { "label": "Under $100" } },
+  { "type": "btn", "settings": { "label": "Splurge" } },
+  { "type": "btn", "settings": { "label": "Gift cards" } }
+]}]}
+{% endschema %}

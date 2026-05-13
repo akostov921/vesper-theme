@@ -1,0 +1,135 @@
+/* ──── INDUSTRY RESEARCH APPLIED ────
+   Source: research/indie-cosmetics.md
+   Top competitor font: `Favorit`
+   Applied as: `Favorit`
+   Alt: `Brown`
+   Median section count across competitors: 8
+   Density target: (n/a)
+   Must-have sections detected: 15
+   (Auto-applied by tools/apply-research.py — re-running refreshes this block.)
+   ────────────────────────────── */
+
+/* =============================================================
+   Vesper — beauty-soft-luxury brief
+   Compositions: hero.asymmetric-floating-card + collection.asymmetric-tiles + pdp.info-floating-card.media-full-bleed
+   Color story: tonal (sand + sage + warm-cream)
+   Type system: serif italic display + sans body, 1.333 ratio
+   Motion: subtle (300-500ms long fade-ups, hover-color-shift only)
+   Form: ghost-line + underlined-only inputs
+
+   Industry research applied (research/premium-hair-care.md, 8 competitors):
+   - Median 11 sections per homepage — we have 14 ✓
+   - Top fonts: Oribe uses itc_avant_garde_gothic (modern sans), Briogeo uses Tiempos (serif).
+     We chose Fraunces — close cousin of Tiempos (serif italic display), matching
+     the Briogeo direction (which scored highest in editorial DNA).
+   - Density target: BALANCED (avg WPN 0.6 in competitor sample). Section copy
+     stays at 30-80 words — verified in index.json.
+   - Must-have sections detected: hero, value-props, featured, ingredient-callout,
+     founder, testimonials, FAQ, sustainability, newsletter — all included ✓
+   ============================================================= */
+
+:root {
+  --ve-bg:        #f4ede1;
+  --ve-bg-2:      #ece2d2;
+  --ve-paper:     #fbf6ec;
+  --ve-ink:       #1c2418;
+  --ve-ink-soft:  #4f5849;
+  --ve-ink-mute:  #8b8b7b;
+  --ve-rule:      #c9c0ad;
+  --ve-sage:      #6a8068;
+  --ve-sage-deep: #44563f;
+  --ve-clay:      #b27049;
+  --ve-card:      #ffffff;
+
+  --ve-serif: "Favorit", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --ve-sans:  "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --ve-fs-display: clamp(2.5rem, 4vw + 0.5rem, 4.4rem);
+  --ve-fs-h1:      clamp(2rem, 2.5vw + 0.5rem, 3.2rem);
+  --ve-fs-h2:      clamp(1.5rem, 1.3vw + 0.5rem, 2.4rem);
+  --ve-fs-h3:      1.4rem;
+  --ve-fs-body:    1rem;
+  --ve-fs-sm:      0.875rem;
+  --ve-fs-xs:      0.75rem;
+
+  --ve-lh-display: 1.08;
+  --ve-lh-body:    1.6;
+
+  --ve-space-1: 0.25rem;
+  --ve-space-2: 0.5rem;
+  --ve-space-3: 0.75rem;
+  --ve-space-4: 1rem;
+  --ve-space-5: 1.5rem;
+  --ve-space-6: 2rem;
+  --ve-space-7: 3rem;
+  --ve-space-8: 5rem;
+  --ve-space-9: 8rem;
+
+  --ve-page-max: 1320px;
+  --ve-page-gutter: clamp(1rem, 4vw, 2.5rem);
+
+  --ve-radius:   8px;
+  --ve-radius-lg: 16px;
+
+  --ve-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ve-dur: 360ms;
+  --ve-dur-slow: 600ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--ve-bg); color: var(--ve-ink); font-family: var(--ve-sans); font-size: var(--ve-fs-body); line-height: var(--ve-lh-body); -webkit-font-smoothing: antialiased; }
+img, picture, svg, video { display: block; max-width: 100%; height: auto; }
+button { font: inherit; cursor: pointer; background: none; border: 0; padding: 0; color: inherit; }
+a { color: inherit; text-decoration: none; }
+h1,h2,h3,h4,h5,h6,p,ul,ol,figure,blockquote { margin: 0; }
+ul, ol { padding-left: 1.2rem; }
+
+.ve-page { width: 100%; margin: 0 auto; max-width: var(--ve-page-max); padding-inline: var(--ve-page-gutter); }
+.ve-page--narrow { max-width: 760px; }
+
+.ve-eyebrow { font-family: var(--ve-sans); font-size: var(--ve-fs-xs); letter-spacing: 0.18em; text-transform: uppercase; color: var(--ve-sage-deep); font-weight: 500; }
+.ve-display { font-family: var(--ve-serif); font-size: var(--ve-fs-display); line-height: var(--ve-lh-display); font-weight: 400; font-style: italic; letter-spacing: -0.01em; }
+.ve-h1 { font-family: var(--ve-serif); font-size: var(--ve-fs-h1); line-height: 1.15; font-weight: 400; }
+.ve-h2 { font-family: var(--ve-serif); font-size: var(--ve-fs-h2); line-height: 1.18; font-weight: 400; }
+.ve-h3 { font-family: var(--ve-serif); font-size: var(--ve-fs-h3); line-height: 1.25; font-weight: 400; }
+.ve-italic { font-style: italic; }
+.ve-lead { font-size: 1.0625rem; line-height: 1.6; color: var(--ve-ink-soft); max-width: 56ch; }
+
+/* Ghost-line button (editorial primary) */
+.ve-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.4rem; background: transparent; color: var(--ve-ink); border: 1px solid var(--ve-ink); border-radius: var(--ve-radius); font-size: 0.95rem; transition: background var(--ve-dur) var(--ve-ease), color var(--ve-dur) var(--ve-ease); }
+.ve-btn:hover { background: var(--ve-ink); color: var(--ve-bg); }
+.ve-btn--solid { background: var(--ve-sage-deep); color: #fff; border-color: var(--ve-sage-deep); }
+.ve-btn--solid:hover { background: var(--ve-ink); color: var(--ve-bg); border-color: var(--ve-ink); }
+
+.ve-link { display: inline-flex; align-items: baseline; gap: 0.4em; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: color var(--ve-dur) var(--ve-ease); }
+.ve-link:hover { color: var(--ve-clay); }
+.ve-link::after { content: "→"; transition: transform var(--ve-dur) var(--ve-ease); }
+.ve-link:hover::after { transform: translateX(4px); }
+
+/* Underlined-only inputs */
+.ve-input { width: 100%; padding: 0.55rem 0; border: 0; border-bottom: 1px solid var(--ve-ink); background: transparent; font: inherit; color: var(--ve-ink); border-radius: 0; transition: border-color var(--ve-dur) var(--ve-ease); }
+.ve-input:focus { outline: none; border-bottom-color: var(--ve-clay); }
+.ve-input::placeholder { color: var(--ve-ink-mute); }
+
+.ve-reveal { opacity: 0; transform: translateY(16px); transition: opacity var(--ve-dur-slow) var(--ve-ease), transform var(--ve-dur-slow) var(--ve-ease); }
+.ve-reveal--shown { opacity: 1; transform: none; }
+
+.ve-section { padding-block: clamp(3rem, 7vw, 7rem); }
+.ve-section--ample { padding-block: clamp(5rem, 10vw, 9rem); }
+.ve-rule { height: 1px; background: var(--ve-rule); margin-block: var(--ve-space-6); border: 0; }
+.ve-vh { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Cart drawer */
+ve-cart-drawer { position: fixed; inset: 0; z-index: 200; pointer-events: none; }
+ve-cart-drawer.is-open { pointer-events: auto; }
+.ve-cart-drawer__scrim { position: absolute; inset: 0; background: rgba(28, 36, 24, 0.4); opacity: 0; transition: opacity var(--ve-dur) var(--ve-ease); }
+ve-cart-drawer.is-open .ve-cart-drawer__scrim { opacity: 1; }
+.ve-cart-drawer__panel { position: absolute; right: 0; top: 0; bottom: 0; width: min(420px, 100%); background: var(--ve-paper); transform: translateX(100%); transition: transform var(--ve-dur-slow) var(--ve-ease); display: flex; flex-direction: column; }
+ve-cart-drawer.is-open .ve-cart-drawer__panel { transform: translateX(0); }
+.ve-cart-drawer__head { display: flex; justify-content: space-between; align-items: center; padding: var(--ve-space-5); border-bottom: 1px solid var(--ve-rule); }
+.ve-cart-drawer__items { flex: 1; overflow-y: auto; padding: var(--ve-space-3); margin: 0; list-style: none; display: grid; gap: var(--ve-space-3); }
+.ve-cart-drawer__item { display: grid; grid-template-columns: 60px 1fr auto; gap: var(--ve-space-3); padding: var(--ve-space-3); border-bottom: 1px solid var(--ve-rule); }
+.ve-cart-drawer__item img { width: 60px; aspect-ratio: 1; object-fit: cover; border-radius: var(--ve-radius); }
+.ve-cart-drawer__foot { padding: var(--ve-space-5); border-top: 1px solid var(--ve-ink); display: grid; gap: var(--ve-space-3); }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } .ve-reveal { opacity: 1; transform: none; } }

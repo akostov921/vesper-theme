@@ -1,0 +1,32 @@
+<article class="ve-article ve-section">
+  <div class="ve-page ve-page--narrow">
+    <header class="ve-article__head">
+      <small class="ve-eyebrow">{{ article.published_at | date: '%B %-d, %Y' }} · {{ blog.title }}</small>
+      <h1 class="ve-display ve-article__title">{{ article.title }}</h1>
+      {%- if article.user.first_name -%}
+        <p class="ve-italic">By {{ article.user.first_name }} {{ article.user.last_name }}</p>
+      {%- endif -%}
+    </header>
+    {%- if article.image -%}
+      <figure class="ve-article__hero">
+        {{ article.image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '720,1100,1400,1800', alt: article.title | escape }}
+      </figure>
+    {%- endif -%}
+    <div class="ve-article__body">{{ article.content }}</div>
+  </div>
+</article>
+
+{% stylesheet %}
+.ve-article__head { display: grid; gap: var(--ve-space-3); margin-bottom: var(--ve-space-7); }
+.ve-article__title { margin-top: var(--ve-space-2); }
+.ve-article__hero { margin: var(--ve-space-6) 0; }
+.ve-article__hero img { width: 100%; }
+.ve-article__body { font-size: 1.0625rem; line-height: 1.75; color: var(--ve-ink-soft); }
+.ve-article__body p { margin-bottom: var(--ve-space-4); }
+.ve-article__body p:first-of-type::first-letter { font-family: var(--ve-serif); font-size: 4em; line-height: 0.85; float: left; padding-right: 0.15em; padding-top: 0.05em; }
+.ve-article__body h2, .ve-article__body h3 { font-family: var(--ve-serif); color: var(--ve-ink); margin-top: var(--ve-space-6); margin-bottom: var(--ve-space-3); }
+.ve-article__body a { color: var(--ve-accent); border-bottom: 1px solid currentColor; }
+.ve-article__body blockquote { font-family: var(--ve-serif); font-style: italic; font-size: 1.5rem; line-height: 1.35; border-left: 1px solid var(--ve-ink); padding-left: var(--ve-space-5); margin-block: var(--ve-space-5); color: var(--ve-ink); }
+{% endstylesheet %}
+
+{% schema %}{ "name": "Article", "tag": "article" }{% endschema %}

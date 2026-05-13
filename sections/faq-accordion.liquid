@@ -1,0 +1,48 @@
+<section class="ve-faq ve-section">
+  <div class="ve-page ve-faq__grid">
+    <header class="ve-faq__head">
+      <span class="ve-eyebrow">{{ section.settings.eyebrow | default: 'FAQ' }}</span>
+      <h2 class="ve-h2">{{ section.settings.heading }}</h2>
+      {%- if section.settings.support != blank -%}<p class="ve-faq__support">{{ section.settings.support }}</p>{%- endif -%}
+    </header>
+    <div class="ve-faq__list">
+      {%- for block in section.blocks -%}
+        <details class="ve-faq__item" {{ block.shopify_attributes }}>
+          <summary class="ve-faq__q">{{ block.settings.question }}<span>+</span></summary>
+          <div class="ve-faq__a">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.ve-faq__grid { display: grid; grid-template-columns: 0.7fr 1.3fr; gap: 3rem; align-items: start; }
+.ve-faq__head { position: sticky; top: 100px; display: grid; gap: 0.5rem; }
+.ve-faq__support { margin-top: 0.75rem; opacity: 0.7; font-size: 0.9rem; max-width: 32ch; }
+.ve-faq__list { display: grid; }
+.ve-faq__item { border-top: 1px solid rgba(0,0,0,0.1); padding-block: 1.25rem; }
+.ve-faq__item:last-child { border-bottom: 1px solid rgba(0,0,0,0.1); }
+.ve-faq__q { cursor: pointer; display: flex; justify-content: space-between; gap: 1rem; font-size: 1.0625rem; list-style: none; }
+.ve-faq__q::-webkit-details-marker { display: none; }
+.ve-faq__q span { transition: transform 200ms; }
+.ve-faq__item[open] .ve-faq__q span { transform: rotate(45deg); }
+.ve-faq__a { padding-top: 0.75rem; opacity: 0.75; line-height: 1.6; max-width: 56ch; }
+@media (max-width: 820px) { .ve-faq__grid { grid-template-columns: 1fr; } .ve-faq__head { position: static; } }
+{% endstylesheet %}
+{% schema %}
+{ "name": "FAQ", "tag": "section", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FAQ" },
+  { "type": "text", "id": "heading", "label": "Heading", "default": "Common questions." },
+  { "type": "textarea", "id": "support", "label": "Support", "default": "Can't find what you need? Email hello@example.com." }
+], "blocks": [
+  { "type": "qa", "name": "Q&A", "settings": [
+    { "type": "text", "id": "question", "label": "Question", "default": "How does shipping work?" },
+    { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Free shipping over $50. 2-4 business days inside the US.</p>" }
+  ]}
+], "max_blocks": 12, "presets": [{ "name": "FAQ", "blocks": [
+  { "type": "qa", "settings": { "question": "Returns policy?" } },
+  { "type": "qa", "settings": { "question": "Subscription benefits?" } },
+  { "type": "qa", "settings": { "question": "International shipping?" } },
+  { "type": "qa", "settings": { "question": "Ingredients & sourcing?" } }
+]}]}
+{% endschema %}

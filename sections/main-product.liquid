@@ -1,0 +1,70 @@
+{%- comment %} Composition: pdp.info-floating-card.media-full-bleed
+   Big full-width image; info as a floating card overlapping the image bottom-left.
+{% endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+<section class="ve-pdp" data-section-id="{{ section.id }}">
+  <div class="ve-pdp__hero">
+    {%- if product.featured_image -%}
+      {%- assign palt = product.title | escape -%}
+      {{ product.featured_image | image_url: width: 2000 | image_tag: loading: 'eager', class: 've-pdp__hero-img', alt: palt }}
+    {%- else -%}
+      <img class="ve-pdp__hero-img" src="https://images.unsplash.com/photo-1626015449731-d586b6e34d2c?w=2000&q=80" alt="" width="2000" height="1200">
+    {%- endif -%}
+  </div>
+  <div class="ve-page">
+    <div class="ve-pdp__card ve-reveal">
+      <small class="ve-eyebrow">{{ product.type | default: 'Botanical wash' }}</small>
+      <h1 class="ve-display">{{ product.title }}</h1>
+      {%- if product.vendor != blank -%}<p class="ve-pdp__author ve-italic">{{ product.vendor }}</p>{%- endif -%}
+      <p class="ve-pdp__price">{{ current_variant.price | money_without_trailing_zeros }}</p>
+      <div class="ve-pdp__desc">{{ product.description | default: '<p>A gentle cleanser formulated with cold-pressed botanical oils, pH-balanced and free from sulfates. Built for daily use on the scalp and hair.</p>' }}</div>
+      <ve-product-form>
+        {%- form 'product', product, class: 've-pdp__form' -%}
+          {%- if product.has_only_default_variant == false -%}
+            {%- for option in product.options_with_values -%}
+              <fieldset class="ve-pdp__option"><legend class="ve-eyebrow">{{ option.name }}</legend>
+                <div class="ve-pdp__chips">{%- for value in option.values -%}<label class="ve-pdp__chip"><input type="radio" name="options[{{ option.name | escape }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}><span>{{ value }}</span></label>{%- endfor -%}</div>
+              </fieldset>
+            {%- endfor -%}
+          {%- endif -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="ve-btn ve-btn--solid ve-pdp__buy" {% unless current_variant.available %}disabled{% endunless %}>{%- if current_variant.available -%}Add to bag{%- else -%}Sold out{%- endif -%}</button>
+        {%- endform -%}
+      </ve-product-form>
+    </div>
+  </div>
+  {%- if product.media.size > 1 -%}
+    <div class="ve-page ve-pdp__more">
+      <h2 class="ve-h2 ve-italic">Look closer</h2>
+      <div class="ve-pdp__gallery">
+        {%- for media in product.media offset: 1 limit: 4 -%}{%- if media.media_type == 'image' -%}{{ media | image_url: width: 1000 | image_tag: loading: 'lazy', class: 've-pdp__thumb' }}{%- endif -%}{%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+{% stylesheet %}
+.ve-pdp { padding: 0; padding-bottom: var(--ve-space-9); }
+.ve-pdp__hero { position: relative; height: clamp(60vh, 80vh, 900px); overflow: hidden; }
+.ve-pdp__hero-img { width: 100%; height: 100%; object-fit: cover; }
+.ve-pdp .ve-page { position: relative; margin-top: -160px; z-index: 2; }
+.ve-pdp__card { background: var(--ve-paper); padding: clamp(2rem, 4vw, 3rem); border-radius: var(--ve-radius-lg); max-width: 480px; box-shadow: 0 24px 60px rgba(28, 36, 24, 0.15); display: grid; gap: var(--ve-space-3); margin-left: auto; }
+.ve-pdp__author { font-family: var(--ve-serif); font-style: italic; color: var(--ve-clay); }
+.ve-pdp__price { font-family: var(--ve-serif); font-size: 1.5rem; padding-block: var(--ve-space-3); border-block: 1px solid var(--ve-rule); }
+.ve-pdp__desc { color: var(--ve-ink-soft); line-height: 1.65; font-size: 0.95rem; }
+.ve-pdp__option { border: 0; padding: 0; margin: 0; display: grid; gap: var(--ve-space-2); }
+.ve-pdp__chips { display: flex; gap: var(--ve-space-2); flex-wrap: wrap; }
+.ve-pdp__chip { position: relative; cursor: pointer; }
+.ve-pdp__chip input { position: absolute; opacity: 0; pointer-events: none; }
+.ve-pdp__chip span { display: inline-flex; padding: 0.45rem 0.9rem; border: 1px solid var(--ve-rule); font-size: var(--ve-fs-sm); border-radius: 999px; transition: all var(--ve-dur) var(--ve-ease); }
+.ve-pdp__chip input:checked + span { background: var(--ve-sage-deep); color: #fff; border-color: var(--ve-sage-deep); }
+.ve-pdp__buy { justify-content: center; }
+.ve-pdp__buy[disabled] { opacity: 0.5; }
+.ve-pdp__more { margin-top: var(--ve-space-8); }
+.ve-pdp__gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--ve-space-3); margin-top: var(--ve-space-5); }
+.ve-pdp__thumb { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: var(--ve-radius); }
+@media (max-width: 880px) { .ve-pdp .ve-page { margin-top: -100px; } .ve-pdp__card { margin-inline: auto; } }
+{% endstylesheet %}
+{% schema %}{ "name": "Product", "tag": "section" }{% endschema %}
